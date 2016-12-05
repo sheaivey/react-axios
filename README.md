@@ -6,7 +6,7 @@ This is intended to allow in render async requests.
 
 - Same great features found in [Axios](https://github.com/mzabriskie/axios)
 - Component driven
-- Child function callback **(response, error, isLoading) => { }**
+- Child function callback **(error, response, isLoading) => { }**
 - Auto cancel previous requests
 - Debounce to prevent rapid calls.
 - Request only invoked on prop change and isReady state.
