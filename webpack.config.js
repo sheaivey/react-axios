@@ -31,6 +31,9 @@ let config = {
         commonjs: 'react',
         amd: 'react'
       }
+    },
+    {
+      axios: 'axios'
     }
   ],
   node: {
