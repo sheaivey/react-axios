@@ -1,10 +1,15 @@
 {
   "name": "react-axios",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Axios Component for React with child function callback.",
   "main": "lib/index.js",
-  "dependencies": {
+  "scripts": {
+    "build": "NODE_ENV=production webpack -p src/index.js",
+    "start": "node examples/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Shea Ivey",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/sheaivey/react-axios"
@@ -23,6 +28,8 @@
     "promise",
     "node"
   ],
+  "dependencies": {
+  },
   "peerDependencies": {
     "axios": "^0.15.0",
     "react": "^0.14.0 || ^15.0.0"
@@ -44,12 +51,5 @@
     "react-dom": "^15.4.1",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4"
-  },
-  "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack -p",
-    "start": "node examples/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Shea Ivey",
-  "license": "MIT"
+  }
 }
