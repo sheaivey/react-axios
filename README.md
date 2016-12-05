@@ -48,7 +48,7 @@ render() {
           }
           return (<div>Default message before request is made.</div>)
         }}
-      </Request>
+      </Get>
     </div>
   )
 }
