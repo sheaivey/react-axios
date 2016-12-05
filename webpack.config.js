@@ -1,23 +1,44 @@
+// webpack.config.js
+
 let webpack = require('webpack')
 let path = require('path')
-
-let BUILD_DIR = path.resolve(__dirname, 'lib')
-let SRC_DIR = path.resolve(__dirname, 'src')
+let libraryName = 'ReactAxios'
+let outputFile = 'index.js'
 
 let config = {
-  entry: SRC_DIR + '/index.js',
+  entry: __dirname + '/src/index.js',
   output: {
-    path: BUILD_DIR,
-    filename: 'index.js'
+    path: __dirname + '/lib',
+    filename: outputFile,
+    library: libraryName,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
-  module : {
-    loaders : [
+  module: {
+    loaders: [
       {
-        test : /\.js?/,
-        include : SRC_DIR,
-        loader : 'babel'
+        test: /(\.jsx|\.js)$/,
+        loader: 'babel',
+        exclude: /(node_modules|bower_components)/
       }
     ]
+  },
+  externals: [
+    {
+      react: {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
+      }
+    }
+  ],
+  node: {
+    Buffer: false
+  },
+  resolve: {
+    root: path.resolve('./src'),
+    extensions: [ '', '.js' ]
   }
 }
 
