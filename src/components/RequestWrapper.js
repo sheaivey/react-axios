@@ -1,5 +1,5 @@
 import React from 'react'
-import Request from '../components/Request'
+import Request from './Request'
 
 let RequestWrapper = (method) => {
   return (props) => {
