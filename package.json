@@ -5,6 +5,10 @@
   "main": "/lib/index.js",
   "dependencies": {
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sheaivey/react-axios"
+  },
   "peerDependencies": {
     "axios": "^0.15.3",
     "react": "^15.4.1",
