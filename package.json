@@ -1,0 +1,38 @@
+{
+  "name": "react-axios",
+  "version": "0.0.1",
+  "description": "Axios component with child function for inline JSX async requests.",
+  "main": "/lib/index.js",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "axios": "^0.15.3",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "axios": "^0.15.3",
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "express": "^4.14.0",
+    "express-urlrewrite": "^1.2.0",
+    "eslint": "^3.2.0",
+    "eslint-config-rackt": "^1.1.1",
+    "eslint-plugin-react": "^6.7.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-middleware": "^1.8.4"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production ./node_modules/.bin/webpack -p",
+    "start": "node examples/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shea Ivey",
+  "license": "MIT"
+}
