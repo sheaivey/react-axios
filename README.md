@@ -1,6 +1,6 @@
 # react-axios
 Axios Component for React with child function callback.
-This is intended to allow for in view async requests.
+This is intended to allow in render async requests.
 
 ## Features
 
@@ -20,9 +20,36 @@ Using npm:
 $ npm install react-axios
 ```
 
+## Components & Properties
+
+#### Base Request Component
+```js
+<Request
+  method="" /* required */
+  url="" /* required */
+  data=""
+  config="" /* axios config */
+  debounce=200
+  isReady={true}
+  onSuccess={(response)=>{}}
+  onLoading={()=>{}}
+  onError=(error)=>{}
+/>
+```
+
+#### Helper Components
+```js
+<Get ... />
+<Delete ... />
+<Head ... />
+<Post ... />
+<Put ... />
+<Patch ... />
+```
+
 ## Example
 
-Include in your view
+Include in your file
 
 ```js
 import { Request, Get, Delete, Head, Post, Put, Patch } from 'react-axios'
