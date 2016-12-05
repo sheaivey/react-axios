@@ -1,7 +1,7 @@
 {
   "name": "react-axios",
-  "version": "0.0.2",
-  "description": "Axios component with child function for inline JSX async requests.",
+  "version": "0.0.3",
+  "description": "Axios Component for React with child function callback.",
   "main": "/lib/index.js",
   "dependencies": {
   },
@@ -9,10 +9,24 @@
     "type": "git",
     "url": "https://github.com/sheaivey/react-axios"
   },
+  "bugs": {
+    "url": "https://github.com/sheaivey/react-axios/issues"
+  },
+  "homepage": "https://github.com/sheaivey/react-axios",
+  "keywords": [
+    "axios",
+    "react",
+    "component",
+    "xhr",
+    "http",
+    "ajax",
+    "promise",
+    "node"
+  ],
   "peerDependencies": {
-    "axios": "^0.15.3",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "axios": "^0.15.0",
+    "react": "^0.14.0 || ^15.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
     "axios": "^0.15.3",
