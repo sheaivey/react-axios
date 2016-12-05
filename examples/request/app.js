@@ -13,7 +13,7 @@ class App extends React.Component {
       <div>
         <code>
           <Request method="get" url="/api/request">
-            {(response, error, isLoading) => {
+            {(error, response, isLoading) => {
               if(error) {
                 return (<div>Something bad happened: {error.message}</div>)
               } else if(isLoading) {

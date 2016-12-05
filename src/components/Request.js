@@ -75,7 +75,7 @@ class Request extends React.Component {
 
   render() {
     if (typeof this.props.children === 'function') {
-      return this.props.children(this.state.response, this.state.error, this.state.isLoading)
+      return this.props.children(this.state.error, this.state.response, this.state.isLoading)
     }
     return null
   }

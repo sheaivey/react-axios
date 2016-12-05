@@ -63,7 +63,7 @@ render() {
   return (
     <div>
       <Get url="/api/user?ID=12345">
-        {(response, error, isLoading) => {
+        {(error, response, isLoading) => {
           if(error) {
             return (<div>Something bad happened: {error.message}</div>)
           }

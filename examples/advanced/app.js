@@ -26,7 +26,7 @@ class App extends React.Component {
             onLoading={()=>this.setState({ isLoading: true })}
             onError={()=>this.setState({ isReady: false, isLoading: false })}
           >
-            {(response, error, isLoading) => {
+            {(error, response, isLoading) => {
               if(error) {
                 return (<div>Something bad happened: {error.message}</div>)
               } else if(isLoading) {
