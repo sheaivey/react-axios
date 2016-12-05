@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import utils from '../utils/utils.js'
 
-class Axios extends React.Component {
+class Request extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -81,7 +81,7 @@ class Axios extends React.Component {
   }
 }
 
-Axios.defaultProps = {
+Request.defaultProps = {
   url: '',
   method: 'get',
   data: {},
@@ -90,7 +90,7 @@ Axios.defaultProps = {
   isReady: true
 }
 
-Axios.propTypes = {
+Request.propTypes = {
   url: React.PropTypes.string.isRequired,
   method: React.PropTypes.string.isRequired,
   data: React.PropTypes.object,
@@ -103,4 +103,4 @@ Axios.propTypes = {
   children: React.PropTypes.func
 }
 
-export default Axios
+export default Request
