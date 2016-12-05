@@ -41,7 +41,7 @@ class App extends React.Component {
         <button className="info" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/api/advanced', debounce: 200 })}>
           Make API Request
         </button>
-        <button className="success" onClick={()=>this.setState({ isReady: true, url: '/api/debounce/?t='+new Date().getTime(), debounce: 250 })}>
+        <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/debounce/?t='+new Date().getTime(), debounce: 250 })}>
           Click rapidly for debounce test
         </button>
         <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/cancel/?t='+new Date().getTime(), debounce: 0 })}>
