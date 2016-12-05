@@ -1,8 +1,8 @@
 {
   "name": "react-axios",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Axios Component for React with child function callback.",
-  "main": "/lib/index.js",
+  "main": "lib/index.js",
   "dependencies": {
   },
   "repository": {
@@ -25,8 +25,7 @@
   ],
   "peerDependencies": {
     "axios": "^0.15.0",
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
     "axios": "^0.15.3",
