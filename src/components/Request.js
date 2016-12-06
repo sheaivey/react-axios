@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import utils from '../utils/utils.js'
+import { debounce } from '../utils'
 
 class Request extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class Request extends React.Component {
   }
 
   setupDebounce(props) {
-    this.debounceMakeRequest = utils.debounce(this.makeRequest, props.debounce)
+    this.debounceMakeRequest = debounce(this.makeRequest, props.debounce)
   }
 
   getConfig(props) {

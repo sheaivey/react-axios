@@ -1,4 +1,4 @@
-function debounce(func, wait, immediate) {
+export function debounce(func, wait, immediate) {
   let timeout
   return function () {
     let context = this, args = arguments
@@ -9,8 +9,4 @@ function debounce(func, wait, immediate) {
       if (!immediate) func.apply(context, args)
     }, wait)
   }
-}
-
-module.exports = {
-  debounce: debounce
 }
