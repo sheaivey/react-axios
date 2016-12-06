@@ -1,10 +1,11 @@
+/* eslint react/prop-types: 0 */
 import React from 'react'
 import Request from './Request'
 
-let RequestWrapper = (method) => {
-  return (props) => {
-    return (<Request {... props} method={method}>{props.children}</Request>)
-  }
+const RequestWrapper = (method) => {
+  return (props) => (
+    <Request {... props} method={method}>{props.children}</Request>
+  )
 }
 
 export default RequestWrapper
