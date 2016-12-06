@@ -8,7 +8,7 @@ fi
 
 current_version=$(node -p "require('./package').version")
 
-printf "Next Version: Current version is $current_version"
+printf "Current version is $current_version\nNext Version: "
 read next_version
 
 npm test
