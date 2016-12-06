@@ -2,6 +2,10 @@ examples
 src
 tests
 node_modules
+scripts
+tools
+__tests__
+.DS_Store
 .eslint
 .babelrc
 npm-debug.log
