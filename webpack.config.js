@@ -1,23 +1,16 @@
-// webpack.config.js
+const webpack = require('webpack')
+const path = require('path')
 
-let webpack = require('webpack')
-let path = require('path')
-let libraryName = 'ReactAxios'
-let outputFile = 'index.js'
-
-let config = {
-  entry: __dirname + '/src/index.js',
+const config = {
+  entry: path.join(__dirname, 'src/index.js'),
   output: {
-    path: __dirname + '/lib',
-    filename: outputFile,
-    library: libraryName,
-    libraryTarget: 'umd',
-    umdNamedDefine: true
+    library: 'ReactAxios',
+    libraryTarget: 'umd'
   },
   module: {
     loaders: [
       {
-        test: /(\.jsx|\.js)$/,
+        test: /\.jsx?$/,
         loader: 'babel',
         exclude: /(node_modules|bower_components)/
       }
@@ -39,10 +32,12 @@ let config = {
   node: {
     Buffer: false
   },
-  resolve: {
-    root: path.resolve('./src'),
-    extensions: [ '', '.js' ]
-  }
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    })
+  ]
 }
 
 module.exports = config
