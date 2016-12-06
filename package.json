@@ -1,12 +1,12 @@
 {
   "name": "react-axios",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Axios Component for React with child function callback.",
   "files": [
     "es",
     "lib",
     "umd"
-],
+  ],
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
   "scripts": {
