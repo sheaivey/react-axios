@@ -1,3 +1,11 @@
 {
-  "presets" : ["es2015", "react"]
+  "presets" : [
+    "./tools/babelPreset",
+    "react"
+  ],
+  "env": {
+    "cjs": {
+      "plugins": ["add-module-exports"]
+    }
+  }
 }
