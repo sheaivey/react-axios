@@ -1,3 +1,8 @@
+
+[![npm](https://img.shields.io/npm/v/react-axios.svg)]()
+[![Build Status](https://travis-ci.org/sheaivey/react-axios.svg?branch=master)](https://travis-ci.org/sheaivey/react-axios)
+[![npm](https://img.shields.io/npm/l/react-axios.svg)]()
+[![npm](https://img.shields.io/npm/dt/react-axios.svg)]()
 # react-axios
 Axios Component for React with child function callback.
 This is intended to allow in render async requests.
