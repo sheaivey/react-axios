@@ -3,6 +3,7 @@
   "version": "0.0.8",
   "description": "Axios Component for React with child function callback.",
   "files": [
+    "*.md",
     "es",
     "lib",
     "umd"
