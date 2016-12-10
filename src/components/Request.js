@@ -42,7 +42,7 @@ class Request extends React.Component {
   }
 
   makeRequest(config) {
-    const _axios = this.props.axios || this.context.axios || axios
+    const _axios = this.props.instance || this.context.axios || axios
     // setup cancel tokens
     if (this.source) {
       this.source.cancel('Canceling previous request.')
@@ -94,7 +94,7 @@ Request.defaultProps = {
 }
 
 Request.propTypes = {
-  axios: React.PropTypes.func,
+  instance: React.PropTypes.func,
   url: React.PropTypes.string.isRequired,
   method: React.PropTypes.string.isRequired,
   data: React.PropTypes.object,

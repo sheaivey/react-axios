@@ -1,7 +1,9 @@
+import AxiosProvider from './components/AxiosProvider'
 import Request from './components/Request'
 import RequestWrapper from './components/RequestWrapper'
 
 module.exports = {
+  AxiosProvider: AxiosProvider,
   Request: Request,
   Get: RequestWrapper('get'),
   Delete: RequestWrapper('delete'),
