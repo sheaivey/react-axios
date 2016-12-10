@@ -11,12 +11,12 @@ This is intended to allow in render async requests.
 
 - Same great features found in [Axios](https://github.com/mzabriskie/axios)
 - Component driven
-- Child function callback **(error, response, isLoading) => { }**
+- Child function callback ***(error, response, isLoading) => { }***
 - Auto cancel previous requests
 - Debounce to prevent rapid calls.
-- Request only invoked on prop change and isReady state.
-- Callback props for onSuccess, onError, and onLoading
-- Supports custom axios instances through props or context
+- Request only invoked on prop change and *isReady* state.
+- Callback props for ***onSuccess***, ***onError***, and ***onLoading***
+- Supports custom axios instances through ***props*** or a ***&lt;AxiosProvider ... &gt;***
 
 ## Installing
 
@@ -31,7 +31,7 @@ $ npm install react-axios
 #### Base Request Component
 ```js
 <Request
-  axios={axios.create({})} /* custom instance of axios - optional */
+  instance={axios.create({})} /* custom instance of axios - optional */
   method="" /* required */
   url="" /* required */
   data="" /* post data - optional */
@@ -59,7 +59,7 @@ $ npm install react-axios
 Include in your file
 
 ```js
-import { Request, Get, Delete, Head, Post, Put, Patch } from 'react-axios'
+import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch } from 'react-axios'
 ```
 
 Performing a `GET` request
@@ -101,28 +101,20 @@ const axiosInstance = axios.create(axios.create({
 
 ```
 
-Pass down through context
+Pass down through a provider
 ```js
-class App extends React.Component {
-  childContextTypes = {
-    axios: React.PropTypes.func
-  }
-  getChildContext() {
-    return { axios: axiosInstance }
-  }
-  render () {
-    <Get url="test">
-      {(error, response, isLoading) => {
-        ...
-      }}
-    </Get>
-  }
-}
+<AxiosProvider instance={axiosInstance}>
+  <Get url="test">
+    {(error, response, isLoading) => {
+      ...
+    }}
+  </Get>
+</axiosInstance>
 ```
 
 Or pass down through props
 ```js
-<Get url="test" axios={axiosInstance}>
+<Get url="test" instance={axiosInstance}>
   {(error, response, isLoading) => {
     ...
   }}
