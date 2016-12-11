@@ -109,7 +109,7 @@ Pass down through a provider
       ...
     }}
   </Get>
-</axiosInstance>
+</AxiosProvider>
 ```
 
 Or pass down through props
