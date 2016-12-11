@@ -42,6 +42,7 @@ class Request extends React.Component {
   }
 
   makeRequest(config) {
+    const _axios = this.props.instance || this.context.axios || axios
     // setup cancel tokens
     if (this.source) {
       this.source.cancel('Canceling previous request.')
@@ -56,13 +57,13 @@ class Request extends React.Component {
 
     // time to make the axios request
     let _this = this
-    axios.request(Object.assign({ cancelToken: this.source.token }, config )).then((res) => {
+    _axios.request(Object.assign({ cancelToken: this.source.token }, config )).then((res) => {
       _this.setState({ isLoading: false, response: res })
       if (typeof _this.props.onSuccess === 'function') {
         _this.props.onSuccess(res)
       }
     }, (err) => {
-      if (!axios.isCancel(err)) {
+      if (!_axios.isCancel(err)) {
         _this.setState({ isLoading: false, response: null, error: err })
         if (typeof _this.props.onError === 'function') {
           _this.props.onError(err)
@@ -79,6 +80,10 @@ class Request extends React.Component {
   }
 }
 
+Request.contextTypes = {
+  axios: React.PropTypes.func
+}
+
 Request.defaultProps = {
   url: '',
   method: 'get',
@@ -89,6 +94,7 @@ Request.defaultProps = {
 }
 
 Request.propTypes = {
+  instance: React.PropTypes.func,
   url: React.PropTypes.string.isRequired,
   method: React.PropTypes.string.isRequired,
   data: React.PropTypes.object,
