@@ -56,17 +56,16 @@ class Request extends React.Component {
     }
 
     // time to make the axios request
-    let _this = this
     _axios.request(Object.assign({ cancelToken: this.source.token }, config )).then((res) => {
-      _this.setState({ isLoading: false, response: res })
-      if (typeof _this.props.onSuccess === 'function') {
-        _this.props.onSuccess(res)
+      this.setState({ isLoading: false, response: res })
+      if (typeof this.props.onSuccess === 'function') {
+        this.props.onSuccess(res)
       }
     }, (err) => {
       if (!_axios.isCancel(err)) {
-        _this.setState({ isLoading: false, response: null, error: err })
-        if (typeof _this.props.onError === 'function') {
-          _this.props.onError(err)
+        this.setState({ isLoading: false, response: null, error: err })
+        if (typeof this.props.onError === 'function') {
+          this.props.onError(err)
         }
       }
     })
