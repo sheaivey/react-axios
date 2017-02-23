@@ -93,11 +93,11 @@ render() {
 
 Create an axios instance
 ```js
-const axiosInstance = axios.create(axios.create({
+const axiosInstance = axios.create({
   baseURL: '/api/',
   timeout: 2000,
   headers: { 'X-Custom-Header': 'foobar' }
-}))
+})
 
 ```
 
