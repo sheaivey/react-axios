@@ -97,7 +97,7 @@ const axiosInstance = axios.create(axios.create({
   baseURL: '/api/',
   timeout: 2000,
   headers: { 'X-Custom-Header': 'foobar' }
-})
+}))
 
 ```
 
