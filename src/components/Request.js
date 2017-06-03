@@ -33,6 +33,12 @@ class Request extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.source && typeof this.source.cancel === 'function') {
+      this.source.cancel('Canceling last request.')
+    }
+  }
+
   setupDebounce(props) {
     this.debounceMakeRequest = debounce(this.makeRequest, props.debounce)
   }
