@@ -9,15 +9,23 @@ class App extends React.Component {
       isReady: false,
       isLoading: false,
       debounce: 200,
-      url: ''
+      url: '',
+      unmount: false
     }
+  }
+
+  testUnmount() {
+    this.setState({ isReady: true, url: '/api/cancel/?t='+new Date().getTime(), debounce: 0, unmount: false })
+    setTimeout(()=>{
+      this.setState({ unmount: true, isLoading: false, isReady: true })
+    }, 500)
   }
 
   render() {
     return (
       <div>
         <code>
-          <Request
+          {!this.state.unmount && <Request
             isReady={this.state.isReady}
             method="get"
             debounce={this.state.debounce}
@@ -36,19 +44,23 @@ class App extends React.Component {
               }
               return <div>Click a button to test its action.</div>
             }}
-          </Request>
+          </Request>}
+          {this.state.unmount && 'Component unmounted.'}
         </code>
-        <button className="info" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/api/advanced', debounce: 200 })}>
+        <button className="info" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/api/advanced', debounce: 200, unmount: false })}>
           Make API Request
         </button>
-        <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/debounce/?t='+new Date().getTime(), debounce: 250 })}>
+        <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/debounce/?t='+new Date().getTime(), debounce: 250, unmount: false })}>
           Click rapidly for debounce test
         </button>
-        <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/cancel/?t='+new Date().getTime(), debounce: 0 })}>
+        <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/cancel/?t='+new Date().getTime(), debounce: 0, unmount: false })}>
           Click rapidly for cancel test
         </button>
-        <button className="danger" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/error', debounce: 200 })}>
+        <button className="danger" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/error', debounce: 200, unmount: false })}>
           Force API Error
+        </button>
+        <button className="danger" disabled={this.state.isLoading} onClick={()=>this.testUnmount()}>
+          Unmount Test
         </button>
       </div>
     )
