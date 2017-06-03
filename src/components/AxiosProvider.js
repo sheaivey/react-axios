@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class AxiosProvider extends React.Component {
   constructor(props) {
@@ -15,15 +16,15 @@ class AxiosProvider extends React.Component {
 }
 
 AxiosProvider.childContextTypes = {
-  axios: React.PropTypes.func
+  axios: PropTypes.func
 }
 
 AxiosProvider.defaultProps = {
 }
 
 AxiosProvider.propTypes = {
-  instance: React.PropTypes.func.isRequired,
-  children: React.PropTypes.any.isRequired
+  instance: PropTypes.func.isRequired,
+  children: PropTypes.any.isRequired
 }
 
 export default AxiosProvider
