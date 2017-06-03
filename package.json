@@ -40,10 +40,12 @@
     "promise",
     "node"
   ],
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
     "axios": "^0.15.0 || ^0.16.0",
-    "react": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0",
+    "prop-types": "^15.5.0"
   },
   "devDependencies": {
     "axios": "^0.16.2",
