@@ -1,6 +1,6 @@
 {
   "name": "react-axios",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Axios Component for React with child function callback.",
   "files": [
     "*.md",
@@ -40,8 +40,7 @@
     "promise",
     "node"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "axios": "^0.15.0 || ^0.16.0",
     "react": "^0.14.0 || ^15.0.0",
