@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import { debounce } from '../utils'
 
@@ -86,7 +87,7 @@ class Request extends React.Component {
 }
 
 Request.contextTypes = {
-  axios: React.PropTypes.func
+  axios: PropTypes.func
 }
 
 Request.defaultProps = {
@@ -99,17 +100,17 @@ Request.defaultProps = {
 }
 
 Request.propTypes = {
-  instance: React.PropTypes.func,
-  url: React.PropTypes.string.isRequired,
-  method: React.PropTypes.string.isRequired,
-  data: React.PropTypes.object,
-  config: React.PropTypes.object,
-  isReady: React.PropTypes.bool,
-  debounce: React.PropTypes.number,
-  onSuccess: React.PropTypes.func,
-  onLoading: React.PropTypes.func,
-  onError: React.PropTypes.func,
-  children: React.PropTypes.func
+  instance: PropTypes.func,
+  url: PropTypes.string.isRequired,
+  method: PropTypes.string.isRequired,
+  data: PropTypes.object,
+  config: PropTypes.object,
+  isReady: PropTypes.bool,
+  debounce: PropTypes.number,
+  onSuccess: PropTypes.func,
+  onLoading: PropTypes.func,
+  onError: PropTypes.func,
+  children: PropTypes.func
 }
 
 export default Request
