@@ -1,6 +1,6 @@
 {
   "name": "react-axios",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Axios Component for React with child function callback.",
   "files": [
     "*.md",
