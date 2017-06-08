@@ -15,39 +15,50 @@ class App extends React.Component {
   }
 
   testUnmount() {
-    this.setState({ isReady: true, url: '/api/cancel/?t='+new Date().getTime(), debounce: 0, unmount: false })
-    setTimeout(()=>{
+    console.log('testUnmount: make request')
+    this.setState({ isReady: true, url: '/api/cancel/?t='+new Date().getTime(), debounce: 200, unmount: false })
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+      console.log('testUnmount: unmount component')
       this.setState({ unmount: true, isLoading: false, isReady: true })
     }, 500)
+  }
+
+  renderStatus() {
+    if(!this.state.unmount) {
+      return (
+        <Request
+          isReady={this.state.isReady}
+          method="get"
+          debounce={this.state.debounce}
+          url={this.state.url}
+          onSuccess={()=>this.setState({ isReady: false, isLoading: false })}
+          onLoading={()=>this.setState({ isLoading: true })}
+          onError={()=>this.setState({ isReady: false, isLoading: false })}
+        >
+          {(error, response, isLoading) => {
+            if(error) {
+              return (<div>Something bad happened: {error.message}</div>)
+            } else if(isLoading) {
+              return (<div className="loader"></div>)
+            } else if(response !== null) {
+              return (<div>{response.data.message}</div>)
+            }
+            return <div>Click a button to test its action.</div>
+          }}
+        </Request>
+      )
+    }
+    return (<span>Component unmounted.</span>)
   }
 
   render() {
     return (
       <div>
         <code>
-          {!this.state.unmount && <Request
-            isReady={this.state.isReady}
-            method="get"
-            debounce={this.state.debounce}
-            url={this.state.url}
-            onSuccess={()=>this.setState({ isReady: false, isLoading: false })}
-            onLoading={()=>this.setState({ isLoading: true })}
-            onError={()=>this.setState({ isReady: false, isLoading: false })}
-          >
-            {(error, response, isLoading) => {
-              if(error) {
-                return (<div>Something bad happened: {error.message}</div>)
-              } else if(isLoading) {
-                return (<div className="loader"></div>)
-              } else if(response !== null) {
-                return (<div>{response.data.message}</div>)
-              }
-              return <div>Click a button to test its action.</div>
-            }}
-          </Request>}
-          {this.state.unmount && 'Component unmounted.'}
+          {this.renderStatus()}
         </code>
-        <button className="info" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/api/advanced', debounce: 200, unmount: false })}>
+        <button className="info" onClick={()=>this.setState({ isReady: true, url: '/api/advanced', debounce: 200, unmount: false })}>
           Make API Request
         </button>
         <button className="warning" onClick={()=>this.setState({ isReady: true, url: '/api/debounce/?t='+new Date().getTime(), debounce: 250, unmount: false })}>
@@ -59,7 +70,7 @@ class App extends React.Component {
         <button className="danger" disabled={this.state.isLoading} onClick={()=>this.setState({ isReady: true, url: '/error', debounce: 200, unmount: false })}>
           Force API Error
         </button>
-        <button className="danger" disabled={this.state.isLoading} onClick={()=>this.testUnmount()}>
+        <button className="danger" disabled={this.state.unmount} onClick={()=>this.testUnmount()}>
           Unmount Test
         </button>
       </div>

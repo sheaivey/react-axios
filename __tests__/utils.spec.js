@@ -4,34 +4,34 @@ import { Request, Get, Delete, Head, Post, Put, Patch } from '../src/index'
 
 const debounceTest = new Promise(
   (resolve) => {
+    let val = 0
     let count = 0
     // create a debounce function
-    const debounceFunc = debounce(()=>{count++}, 3)
-    debounceFunc() // ignored count=0
-    debounceFunc() // ignored count=0
-    debounceFunc() // ignored count=0
-    debounceFunc() // called  count=1
-    setTimeout(debounceFunc, 5) // called count=2
+    const debounceFunc = debounce((arg)=>{val = arg; count++}, 3)
+    debounceFunc(1) // ignored val=1, count=0
+    debounceFunc(2) // ignored val=2, count=0
+    debounceFunc(3) // ignored val=3, count=0
+    debounceFunc(4) // called  val=4, count=1
+    //setTimeout(debounceFunc, 5) // called count=2
     setTimeout(() => {
-      resolve(count) // count should be 2
-    }, 25)
-    debounce(()=>{count++}, 3, true)
+      resolve(count) // val should be 4, count should be 1
+    }, 50)
   }
 )
 
 const debounceTestImmediate = new Promise(
   (resolve) => {
+    let val = 0
     let count = 0
     // create a debounce function
-    const debounceFunc = debounce(()=>{count++}, 3, true)
-    debounceFunc() // called count=1
-    debounceFunc() // ignored count=1
-    debounceFunc() // ignored count=1
-    debounceFunc() // ignored count=1
-    setTimeout(debounceFunc, 5) // called count=2
+    const debounceFunc = debounce((arg)=>{val = arg; count++}, 3, true)
+    debounceFunc(1) // called val=1, count=1
+    debounceFunc(2) // ignored val=2, count=1
+    debounceFunc(3) // ignored val=3, count=1
+    debounceFunc(4) // called val=4, count=2
     setTimeout(() => {
-      resolve(count) // count should be 2
-    }, 25)
+      resolve(count) // val should be 4, count should be 2
+    }, 50)
   }
 )
 
@@ -44,7 +44,7 @@ describe('utils', () => {
 
     test('debounce test', () => {
       return debounceTest.then((res)=> {
-        expect(res).toBe(2)
+        expect(res).toBe(1)
       })
     })
     test('debounce test immediate', () => {
