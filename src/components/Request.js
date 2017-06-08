@@ -41,7 +41,7 @@ class Request extends React.Component {
   }
 
   setupDebounce(props) {
-    this.debounceMakeRequest = debounce(this.makeRequest, props.debounce)
+    this.debounceMakeRequest = debounce(this.makeRequest, props.debounce, props.debounceImmediate)
   }
 
   getConfig(props) {
@@ -96,6 +96,7 @@ Request.defaultProps = {
   data: {},
   config: {},
   debounce: 200,
+  debounceImmediate: true,
   isReady: true
 }
 
@@ -107,6 +108,7 @@ Request.propTypes = {
   config: PropTypes.object,
   isReady: PropTypes.bool,
   debounce: PropTypes.number,
+  debounceImmediate: PropTypes.bool,
   onSuccess: PropTypes.func,
   onLoading: PropTypes.func,
   onError: PropTypes.func,
