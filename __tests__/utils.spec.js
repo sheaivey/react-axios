@@ -1,6 +1,8 @@
+import axios from 'axios'
 import React from 'react'
+import renderer from 'react-test-renderer'
 import { debounce } from '../src/utils'
-import { Request, Get, Delete, Head, Post, Put, Patch } from '../src/index'
+import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from '../src/index'
 
 const debounceTest = new Promise(
   (resolve) => {
@@ -145,6 +147,34 @@ describe('components', () => {
     })
     test('is method=patch', () => {
       expect(component.props.method).toBe('patch')
+    })
+  })
+
+  describe('#withAxios', () => {
+    const Component = withAxios(props => {
+      props.onRendered(props.axios)
+      return <div/>
+    })
+    test('provides default instance', () => {
+      let seenAxios
+      renderer(
+        <Component onRendered={passedAxios => {
+          seenAxios = passedAxios
+        }}/>
+      )
+      expect(typeof seenAxios).toBe('function')
+    })
+    test('respects AxiosProvider', () => {
+      const axiosInstance = axios.create()
+      let seenAxios
+      renderer(
+        <AxiosProvider instance={axiosInstance}>
+          <Component onRendered={passedAxios => {
+            seenAxios = passedAxios
+          }}/>
+        </AxiosProvider>
+      )
+      expect(seenAxios).toBe(axiosInstance)
     })
   })
 })

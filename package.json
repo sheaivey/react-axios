@@ -64,6 +64,7 @@
     "jest": "^17.0.3",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-test-renderer": "^1.1.0",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4"
   }
