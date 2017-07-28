@@ -3123,7 +3123,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.7, prop-types@~15.5.7:
+prop-types@^15.5.7, prop-types@~15.5.7:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -3185,6 +3185,10 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+"react-addons-test-utils@^0.14.0 || ^15.0.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.0.tgz#062d36117fe8d18f3ba5e06eb33383b0b85ea5b9"
+
 react-dom@^15.4.1:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.5.4.tgz#ba0c28786fd52ed7e4f2135fe0288d462aef93da"
@@ -3193,6 +3197,13 @@ react-dom@^15.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "~15.5.7"
+
+react-test-renderer@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-1.1.0.tgz#0faa35a2cd71a1499a1e3d72267a34fcb1e350ef"
+  dependencies:
+    object-assign "^4.1.0"
+    react-addons-test-utils "^0.14.0 || ^15.0.0"
 
 react@^15.4.1:
   version "15.5.4"
