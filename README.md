@@ -60,7 +60,7 @@ $ npm install react-axios
 Include in your file
 
 ```js
-import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch } from 'react-axios'
+import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 ```
 
 Performing a `GET` request
@@ -120,4 +120,24 @@ Or pass down through props
     ...
   }}
 </Get>
+```
+
+Retrieve from custom provider (when you need to directly use axios).
+The default instance will be passed if not inside an `<AxiosProvider/>`.
+```js
+const MyComponent = withAxios(class MyComponentImpl extends React.Component {
+  componentWillMount() {
+    this.props.axios('test').then(result => {
+      this.setState({ data: result.data })
+    })
+  }
+  render() {
+    const data = (this.state || {}).data
+    return <div>{JSON.stringify(data)}</div>
+  }
+})
+
+<AxiosProvider instance={axiosInstance}>
+  <MyComponent/>
+</AxiosProvider>
 ```
