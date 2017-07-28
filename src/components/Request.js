@@ -29,12 +29,14 @@ class Request extends React.Component {
   }
 
   componentDidMount() {
+    this._mounted = true
     if (this.props.isReady) {
       this.debounceMakeRequest(this.getConfig(this.props))
     }
   }
 
   componentWillUnmount() {
+    this._mounted = false
     if (this.source && typeof this.source.cancel === 'function') {
       this.source.cancel('Canceling last request.')
     }
@@ -50,6 +52,9 @@ class Request extends React.Component {
 
   makeRequest(config) {
     const _axios = this.props.instance || this.context.axios || axios
+    if (!this._mounted) {
+      return
+    }
     // setup cancel tokens
     if (this.source) {
       this.source.cancel('Canceling previous request.')
@@ -64,11 +69,17 @@ class Request extends React.Component {
 
     // time to make the axios request
     _axios.request(Object.assign({ cancelToken: this.source.token }, config )).then((res) => {
+      if (!this._mounted) {
+        return
+      }
       this.setState({ isLoading: false, response: res })
       if (typeof this.props.onSuccess === 'function') {
         this.props.onSuccess(res)
       }
     }, (err) => {
+      if (!this._mounted) {
+        return
+      }
       if (!_axios.isCancel(err)) {
         this.setState({ isLoading: false, response: null, error: err })
         if (typeof this.props.onError === 'function') {
