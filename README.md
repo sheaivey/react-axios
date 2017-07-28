@@ -34,8 +34,8 @@ $ npm install react-axios
   instance={axios.create({})} /* custom instance of axios - optional */
   method="" /* get, delete, head, post, put and patch - required */
   url="" /*  url endpoint to be requested - required */
-  data="" /* post data - optional */
-  config="" /* axios config - optional */
+  data={} /* post data - optional */
+  config={} /* axios config - optional */
   debounce={200} /* minimum time between requests events - optional */
   debounceImmediate={true} /* make the request on the beginning or trailing end of debounce - optional */
   isReady={true} /* can make the axios request - optional */
@@ -66,11 +66,11 @@ import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios 
 Performing a `GET` request
 
 ```js
-// Make a request for a user with a given ID
+// Post a request for a user with a given ID
 render() {
   return (
     <div>
-      <Get url="/api/user?ID=12345">
+      <Post url="/api/user" data={{id: "12345"}}>
         {(error, response, isLoading) => {
           if(error) {
             return (<div>Something bad happened: {error.message}</div>)
@@ -83,7 +83,7 @@ render() {
           }
           return (<div>Default message before request is made.</div>)
         }}
-      </Get>
+      </Post>
     </div>
   )
 }
