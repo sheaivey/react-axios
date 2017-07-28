@@ -9,7 +9,7 @@ class Request extends React.Component {
     this.state = {
       isLoading: false,
       response: null,
-      error: null
+      error: null,
     }
     // create debounce function
     this.setupDebounce(props)
@@ -87,7 +87,7 @@ class Request extends React.Component {
 }
 
 Request.contextTypes = {
-  axios: PropTypes.func
+  axios: PropTypes.func,
 }
 
 Request.defaultProps = {
@@ -97,7 +97,7 @@ Request.defaultProps = {
   config: {},
   debounce: 200,
   debounceImmediate: true,
-  isReady: true
+  isReady: true,
 }
 
 Request.propTypes = {
@@ -112,7 +112,7 @@ Request.propTypes = {
   onSuccess: PropTypes.func,
   onLoading: PropTypes.func,
   onError: PropTypes.func,
-  children: PropTypes.func
+  children: PropTypes.func,
 }
 
 export default Request

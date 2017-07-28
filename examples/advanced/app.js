@@ -10,7 +10,7 @@ class App extends React.Component {
       isLoading: false,
       debounce: 200,
       url: '',
-      unmount: false
+      unmount: false,
     }
   }
 

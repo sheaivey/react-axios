@@ -17,33 +17,33 @@ module.exports = {
     path: __dirname + '/__build__',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    publicPath: '/__build__/'
+    publicPath: '/__build__/',
   },
 
   module: {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
-      { test: /\.css$/, loader: 'style!css' }
-    ]
+      { test: /\.css$/, loader: 'style!css' },
+    ],
   },
 
   resolve: {
     alias: {
-      'react-axios': path.join(__dirname, '..', 'src')
-    }
+      'react-axios': path.join(__dirname, '..', 'src'),
+    },
   },
 
   // Expose __dirname to allow automatically setting basename.
   context: __dirname,
   node: {
-    __dirname: true
+    __dirname: true,
   },
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('shared.js'),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    })
-  ]
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    }),
+  ],
 
 }

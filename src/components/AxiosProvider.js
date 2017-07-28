@@ -17,7 +17,7 @@ class AxiosProvider extends React.Component {
 }
 
 AxiosProvider.childContextTypes = {
-  axios: PropTypes.func
+  axios: PropTypes.func,
 }
 
 AxiosProvider.defaultProps = {
@@ -25,7 +25,7 @@ AxiosProvider.defaultProps = {
 
 AxiosProvider.propTypes = {
   instance: PropTypes.func.isRequired,
-  children: PropTypes.any.isRequired
+  children: PropTypes.any.isRequired,
 }
 
 export default AxiosProvider
@@ -36,7 +36,7 @@ export const withAxios = (WrappedComponent) => {
   }
 
   AxiosExtracter.contextTypes = {
-    axios: PropTypes.func
+    axios: PropTypes.func,
   }
 
   return AxiosExtracter

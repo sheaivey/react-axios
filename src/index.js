@@ -11,5 +11,5 @@ module.exports = {
   Post: RequestWrapper('post'),
   Put: RequestWrapper('put'),
   Patch: RequestWrapper('patch'),
-  withAxios: withAxios
+  withAxios: withAxios,
 }

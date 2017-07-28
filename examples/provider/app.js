@@ -6,13 +6,13 @@ import ReactDOM from 'react-dom'
 const axiosProvider = axios.create({
   baseURL: '/api/provider/',
   timeout: 2000,
-  headers: { 'X-Custom-Header': 'foobar' }
+  headers: { 'X-Custom-Header': 'foobar' },
 })
 
 const axiosProp = axios.create({
   baseURL: '/api/props/',
   timeout: 2000,
-  headers: { 'X-Custom-Header': 'foobar' }
+  headers: { 'X-Custom-Header': 'foobar' },
 })
 
 class App extends React.Component {

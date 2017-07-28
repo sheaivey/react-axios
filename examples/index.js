@@ -13,8 +13,8 @@ app.all('/api/*', (req, res) => { // Fake API response
 app.use(webpackDevMiddleware(webpack(WebpackConfig), {
   publicPath: '/__build__/',
   stats: {
-    colors: true
-  }
+    colors: true,
+  },
 }))
 
 let fs = require('fs')

@@ -4,6 +4,7 @@
     "__DEV__": false
   },
   "rules": {
+    "comma-dangle": ["error", "always-multiline"],
     "react/display-name": 0,
     "react/jsx-wrap-multilines": 2
   },
