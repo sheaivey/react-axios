@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import renderer from 'react-test-renderer'
+import ReactDOM from 'react-dom';
 import { debounce } from '../src/utils'
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from '../src/index'
 
@@ -58,6 +59,20 @@ describe('utils', () => {
 })
 
 describe('components', () => {
+  function buildConfig(status, statusText, data) {
+    return {
+      adapter: (config) => Promise.resolve({
+        data: data,
+        status: status,
+        statusText: statusText,
+        headers: {
+          'content-type': 'text/plain',
+        },
+        config: config,
+      }),
+    }
+  }
+
   describe('#Request', () => {
     const component = (<Request method="get" url="http://www.example.com/">
       {(error, results, isLoading) => {
@@ -87,6 +102,65 @@ describe('components', () => {
     })
     test('is error...', () => {
       expect(component.props.children(true, false, false).props.children).toBe('error')
+    })
+
+    it('can load data…', () => new Promise(
+      (resolve) => {
+        ReactDOM.render(
+          <Request config={buildConfig(200, 'OK', 'data')} method="get" url="http://www.example.com/">
+          {(error, results, isLoading) => {
+            if (results) {
+              expect(results.data).toBe('data')
+              resolve()
+            }
+            return <div/>
+          }}
+          </Request>,
+          document.createElement('div')
+        )
+      }
+    ))
+
+    it('can unmount safely after debounce is triggered…', () => {
+      function MyRender(props) {
+        return <Request config={buildConfig(200, 'OK', 'pointless data')} debounce={200} method="get" url={`http://www.example.com/?p=${encodeURIComponent(props.query.p)}`}>
+          {(error, results, isLoading) => {
+            return <div/>
+          }}
+        </Request>;
+      }
+      // the warnings from React won’t fail the test in jest
+      // unless you make them manually.
+      return new Promise((resolveConsoleWarning, rejectConsoleWarning) => {
+        const originalConsoleError = console.error
+        console.error = function () {
+          originalConsoleError.apply(this, arguments)
+          rejectConsoleWarning(new Error(`console.error: ${[].join.call(arguments, ' ')}`))
+        }
+
+        const div = document.createElement('div')
+        new Promise((resolve) => {
+          ReactDOM.render(
+            <MyRender query={{p: 1}} ref={resolve}/>,
+            div
+          )
+        }).then(() => new Promise((resolve) => {
+          ReactDOM.render(
+            <MyRender query={{p: 2}} ref={resolve}/>,
+            div
+          )
+        })).then(() => new Promise((resolve) => {
+          // Now unmount and wait out the debounce time.
+          ReactDOM.render(
+            <div ref={resolve}/>,
+            div
+          )
+        })).then(() => {
+          // Successful if we make it to debounce without
+          // getting any console warnings.
+          setTimeout(resolveConsoleWarning, 400)
+        })
+      })
     })
   })
 
