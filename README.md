@@ -26,6 +26,14 @@ Using npm:
 $ npm install react-axios
 ```
 
+Also install the required peer dependancies if you have not already done so:
+
+```bash
+$ npm install axios
+$ npm install react
+$ npm install prop-types
+```
+
 ## Components & Properties
 
 #### Base Request Component
