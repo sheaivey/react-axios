@@ -7,7 +7,7 @@ let WebpackConfig = require('./webpack.config')
 let app = express()
 
 app.all('/api/*', (req, res) => { // Fake API response
-  setTimeout(() => { res.status(200).json({ message: 'Success! ' + req.url }) }, 1000)
+  setTimeout(() => { res.status(200).json({ message: 'Success! ' + req.method +  ' ' + req.url }) }, 1000)
 })
 
 app.use(webpackDevMiddleware(webpack(WebpackConfig), {
