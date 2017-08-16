@@ -16,38 +16,31 @@ const axiosProp = axios.create({
 })
 
 class App extends React.Component {
+  renderResponse(error, response, isLoading) {
+    if(error) {
+      return (<div>Something bad happened: {error.message}</div>)
+    } else if(isLoading) {
+      return (<div className="loader"></div>)
+    } else if(response !== null) {
+      return (<div>{response.data.message}</div>)
+    }
+    return null
+  }
+
   render() {
     return (
       <div>
         <h2>Default Axios Instance</h2>
         <code>
           <Get url="/api/test">
-            {(error, response, isLoading) => {
-              if(error) {
-                return (<div>Something bad happened: {error.message}</div>)
-              } else if(isLoading) {
-                return (<div className="loader"></div>)
-              } else if(response !== null) {
-                return (<div>{response.data.message}</div>)
-              }
-              return null
-            }}
+            {this.renderResponse}
           </Get>
         </code>
 
         <h2>Axios Instance from Props</h2>
         <code>
           <Get url="test" instance={axiosProp}>
-            {(error, response, isLoading) => {
-              if(error) {
-                return (<div>Something bad happened: {error.message}</div>)
-              } else if(isLoading) {
-                return (<div className="loader"></div>)
-              } else if(response !== null) {
-                return (<div>{response.data.message}</div>)
-              }
-              return null
-            }}
+            {this.renderResponse}
           </Get>
         </code>
 
@@ -55,16 +48,7 @@ class App extends React.Component {
         <AxiosProvider instance={axiosProvider} >
           <code>
             <Get url="test">
-              {(error, response, isLoading) => {
-                if(error) {
-                  return (<div>Something bad happened: {error.message}</div>)
-                } else if(isLoading) {
-                  return (<div className="loader"></div>)
-                } else if(response !== null) {
-                  return (<div>{response.data.message}</div>)
-                }
-                return null
-              }}
+              {this.renderResponse}
             </Get>
           </code>
         </AxiosProvider>
