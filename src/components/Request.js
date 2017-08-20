@@ -81,7 +81,7 @@ class Request extends React.Component {
         return
       }
       if (!_axios.isCancel(err)) {
-        this.setState({ isLoading: false, response: null, error: err })
+        this.setState({ isLoading: false, response: err.response || null, error: err })
         if (typeof this.props.onError === 'function') {
           this.props.onError(err)
         }
