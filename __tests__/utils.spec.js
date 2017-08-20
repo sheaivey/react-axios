@@ -1,4 +1,5 @@
 import axios from 'axios'
+import axiosSettle from 'axios/lib/core/settle';
 import React from 'react'
 import renderer from 'react-test-renderer'
 import ReactDOM from 'react-dom';
@@ -61,15 +62,28 @@ describe('utils', () => {
 describe('components', () => {
   function buildConfig(status, statusText, data) {
     return {
-      adapter: (config) => Promise.resolve({
-        data: data,
-        status: status,
-        statusText: statusText,
-        headers: {
-          'content-type': 'text/plain',
-        },
-        config: config,
+      adapter: (config) => new Promise((resolve, reject) => {
+        const response = {
+          data: data,
+          status: status,
+          statusText: statusText,
+          headers: {
+            'content-type': 'text/plain',
+         },
+          config: config,
+        }
+        // Must call settle() to properly turn the response into an
+        // error if, e.g., status is outside the expected range.
+        axiosSettle(resolve, reject, response)
       }),
+    }
+  }
+
+  function buildNoResponseConfig() {
+    return {
+      adapter: (config) => {
+        throw new Error('Failed to make request!')
+      },
     }
   }
 
@@ -110,7 +124,45 @@ describe('components', () => {
           <Request config={buildConfig(200, 'OK', 'data')} method="get" url="http://www.example.com/">
           {(error, results, isLoading) => {
             if (results) {
+              expect(results.status).toBe(200)
               expect(results.data).toBe('data')
+              resolve()
+            }
+            return <div/>
+          }}
+          </Request>,
+          document.createElement('div')
+        )
+      }
+    ))
+
+    it('can see response for error…', () => new Promise(
+      (resolve) => {
+        ReactDOM.render(
+          <Request config={buildConfig(403, 'Forbidden', 'data')} method="get" url="http://www.example.com/">
+          {(error, response, isLoading) => {
+            if (response) {
+              expect(response).toBeDefined()
+              expect(response.status).toBe(403)
+              expect(response.data).toBe('data')
+              expect(error).toBeTruthy()
+              resolve()
+            }
+            return <div/>
+          }}
+          </Request>,
+          document.createElement('div')
+        )
+      }
+    ))
+
+    it('can’t see response for error with no response…', () => new Promise(
+      (resolve) => {
+        ReactDOM.render(
+          <Request config={buildNoResponseConfig()} method="get" url="http://www.example.com/">
+          {(error, response, isLoading) => {
+            if (error) {
+              expect(response).toBe(null)
               resolve()
             }
             return <div/>
