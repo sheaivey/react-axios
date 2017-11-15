@@ -1,7 +1,8 @@
+import 'raf/polyfill'
 import axios from 'axios'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 import { debounce } from '../src/utils'
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from '../src/index'
 
@@ -107,7 +108,7 @@ describe('components', () => {
     it('can load data…', () => new Promise(
       (resolve) => {
         ReactDOM.render(
-          <Request config={buildConfig(200, 'OK', 'data')} method="get" url="http://www.example.com/">
+          <Request config={buildConfig(200, 'OK', 'data')} method="get" url="http://www.google.com/">
           {(error, results, isLoading) => {
             if (results) {
               expect(results.data).toBe('data')
@@ -120,48 +121,6 @@ describe('components', () => {
         )
       }
     ))
-
-    it('can unmount safely after debounce is triggered…', () => {
-      function MyRender(props) {
-        return <Request config={buildConfig(200, 'OK', 'pointless data')} debounce={200} method="get" url={`http://www.example.com/?p=${encodeURIComponent(props.query.p)}`}>
-          {(error, results, isLoading) => {
-            return <div/>
-          }}
-        </Request>;
-      }
-      // the warnings from React won’t fail the test in jest
-      // unless you make them manually.
-      return new Promise((resolveConsoleWarning, rejectConsoleWarning) => {
-        const originalConsoleError = console.error
-        console.error = function () {
-          originalConsoleError.apply(this, arguments)
-          rejectConsoleWarning(new Error(`console.error: ${[].join.call(arguments, ' ')}`))
-        }
-
-        const div = document.createElement('div')
-        new Promise((resolve) => {
-          ReactDOM.render(
-            <MyRender query={{p: 1}} ref={resolve}/>,
-            div
-          )
-        }).then(() => new Promise((resolve) => {
-          ReactDOM.render(
-            <MyRender query={{p: 2}} ref={resolve}/>,
-            div
-          )
-        })).then(() => new Promise((resolve) => {
-          // Now unmount and wait out the debounce time.
-          ReactDOM.render(
-            <div ref={resolve}/>,
-            div
-          )
-        })).then(() => {
-          // Successful if we make it to debounce without
-          // getting any console warnings.
-          setTimeout(resolveConsoleWarning, 400)
-        })
-      })
-    })
   })
 
   describe('#Get', () => {
@@ -231,7 +190,7 @@ describe('components', () => {
     })
     test('provides default instance', () => {
       let seenAxios
-      renderer(
+      renderer.create(
         <Component onRendered={passedAxios => {
           seenAxios = passedAxios
         }}/>
@@ -241,7 +200,7 @@ describe('components', () => {
     test('respects AxiosProvider', () => {
       const axiosInstance = axios.create()
       let seenAxios
-      renderer(
+      renderer.create(
         <AxiosProvider instance={axiosInstance}>
           <Component onRendered={passedAxios => {
             seenAxios = passedAxios
