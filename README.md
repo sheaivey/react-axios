@@ -43,6 +43,7 @@ $ npm install prop-types
   method="" /* get, delete, head, post, put and patch - required */
   url="" /*  url endpoint to be requested - required */
   data={} /* post data - optional */
+  params={} /* queryString data - optional */
   config={} /* axios config - optional */
   debounce={200} /* minimum time between requests events - optional */
   debounceImmediate={true} /* make the request on the beginning or trailing end of debounce - optional */
@@ -73,21 +74,21 @@ import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios 
 
 Performing a `GET` request
 
-```js
+```jsx
 // Post a request for a user with a given ID
 render() {
   return (
     <div>
       <Post url="/api/user" data={{id: "12345"}}>
-        {(error, response, isLoading) => {
+        {(error, response, isLoading, onReload) => {
           if(error) {
-            return (<div>Something bad happened: {error.message}</div>)
+            return (<div>Something bad happened: {error.message} <button onClick={() => onReload({ params: { reload: true } })}>Retry</button></div>)
           }
           else if(isLoading) {
             return (<div>Loading...</div>)
           }
           else if(response !== null) {
-            return (<div>{response.data.message}</div>)
+            return (<div>{response.data.message} <button onClick={() => onReload({ params: { refresh: true } })}>Refresh</button></div>)
           }
           return (<div>Default message before request is made.</div>)
         }}
@@ -96,6 +97,13 @@ render() {
   )
 }
 ```
+
+### Exposed properties to the child function.
+
+`error` The error object returned by Axios.
+`response` The response object returned by Axios.
+`isLoading` Boolean flag indicating if Axios is currently making a XHR request.
+`onReload(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only.
 
 
 ## Custom Axios Instance
