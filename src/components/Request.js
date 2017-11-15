@@ -35,6 +35,12 @@ class Request extends React.Component {
     }
   }
 
+  onReload(props) {
+    if (!this.state.isLoading) {
+      this.debounceMakeRequest(this.getConfig(props ? Object.assign({}, this.props, props) : this.props))
+    }
+  }
+
   componentWillUnmount() {
     this._mounted = false
     if (this.source && typeof this.source.cancel === 'function') {
@@ -91,7 +97,7 @@ class Request extends React.Component {
 
   render() {
     if (typeof this.props.children === 'function') {
-      return this.props.children(this.state.error, this.state.response, this.state.isLoading)
+      return this.props.children(this.state.error, this.state.response, this.state.isLoading, (props) => this.onReload(props))
     }
     return null
   }
