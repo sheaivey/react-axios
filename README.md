@@ -37,7 +37,7 @@ $ npm install prop-types
 ## Components & Properties
 
 #### Base Request Component
-```js
+```jsx
 <Request
   instance={axios.create({})} /* custom instance of axios - optional */
   method="" /* get, delete, head, post, put and patch - required */
@@ -55,7 +55,7 @@ $ npm install prop-types
 ```
 
 #### Helper Components
-```js
+```jsx
 <Get ... />
 <Delete ... />
 <Head ... />
@@ -98,11 +98,13 @@ render() {
 }
 ```
 
-### Exposed properties to the child function.
-
+### Exposed properties on the child function.
 `error` The error object returned by Axios.
+
 `response` The response object returned by Axios.
+
 `isLoading` Boolean flag indicating if Axios is currently making a XHR request.
+
 `onReload(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only.
 
 
@@ -119,7 +121,7 @@ const axiosInstance = axios.create({
 ```
 
 Pass down through a provider
-```js
+```jsx
 <AxiosProvider instance={axiosInstance}>
   <Get url="test">
     {(error, response, isLoading) => {
@@ -130,7 +132,7 @@ Pass down through a provider
 ```
 
 Or pass down through props
-```js
+```jsx
 <Get url="test" instance={axiosInstance}>
   {(error, response, isLoading) => {
     ...
@@ -140,7 +142,7 @@ Or pass down through props
 
 Retrieve from custom provider (when you need to directly use axios).
 The default instance will be passed if not inside an `<AxiosProvider/>`.
-```js
+```jsx
 const MyComponent = withAxios(class MyComponentImpl extends React.Component {
   componentWillMount() {
     this.props.axios('test').then(result => {
