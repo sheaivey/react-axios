@@ -53,7 +53,7 @@ class Request extends React.Component {
   }
 
   getConfig(props) {
-    return Object.assign({ url: props.url, method: props.method, data: props.data }, props.config)
+    return Object.assign({ url: props.url, method: props.method, data: props.data, params: props.params }, props.config)
   }
 
   makeRequest(config) {
@@ -122,6 +122,7 @@ Request.propTypes = {
   url: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
   data: PropTypes.object,
+  params: PropTypes.object,
   config: PropTypes.object,
   isReady: PropTypes.bool,
   debounce: PropTypes.number,
