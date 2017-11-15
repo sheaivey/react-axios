@@ -35,6 +35,12 @@ class Request extends React.Component {
     }
   }
 
+  onReload(props) {
+    if (!this.state.isLoading) {
+      this.debounceMakeRequest(this.getConfig(props ? Object.assign({}, this.props, props) : this.props))
+    }
+  }
+
   componentWillUnmount() {
     this._mounted = false
     if (this.source && typeof this.source.cancel === 'function') {
@@ -47,7 +53,7 @@ class Request extends React.Component {
   }
 
   getConfig(props) {
-    return Object.assign({ url: props.url, method: props.method, data: props.data }, props.config)
+    return Object.assign({ url: props.url, method: props.method, data: props.data, params: props.params }, props.config)
   }
 
   makeRequest(config) {
@@ -81,7 +87,7 @@ class Request extends React.Component {
         return
       }
       if (!_axios.isCancel(err)) {
-        this.setState({ isLoading: false, response: null, error: err })
+        this.setState({ isLoading: false, response: err.response, error: err })
         if (typeof this.props.onError === 'function') {
           this.props.onError(err)
         }
@@ -91,7 +97,7 @@ class Request extends React.Component {
 
   render() {
     if (typeof this.props.children === 'function') {
-      return this.props.children(this.state.error, this.state.response, this.state.isLoading)
+      return this.props.children(this.state.error, this.state.response, this.state.isLoading, (props) => this.onReload(props))
     }
     return null
   }
@@ -116,6 +122,7 @@ Request.propTypes = {
   url: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
   data: PropTypes.object,
+  params: PropTypes.object,
   config: PropTypes.object,
   isReady: PropTypes.bool,
   debounce: PropTypes.number,
