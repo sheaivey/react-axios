@@ -11,7 +11,7 @@ This is intended to allow in render async requests.
 
 - Same great features found in [Axios](https://github.com/mzabriskie/axios)
 - Component driven
-- Child function callback ***(error, response, isLoading) => { }***
+- Child function callback ***(error, response, isLoading, onReload) => { }***
 - Auto cancel previous requests
 - Debounce to prevent rapid calls.
 - Request only invoked on prop change and *isReady* state.
@@ -74,12 +74,12 @@ import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios 
 
 Performing a `GET` request
 
-```jsx
+```js
 // Post a request for a user with a given ID
 render() {
   return (
     <div>
-      <Post url="/api/user" data={{id: "12345"}}>
+      <Get url="/api/user" params={{id: "12345"}}>
         {(error, response, isLoading, onReload) => {
           if(error) {
             return (<div>Something bad happened: {error.message} <button onClick={() => onReload({ params: { reload: true } })}>Retry</button></div>)
@@ -92,7 +92,7 @@ render() {
           }
           return (<div>Default message before request is made.</div>)
         }}
-      </Post>
+      </Get>
     </div>
   )
 }
@@ -124,7 +124,7 @@ Pass down through a provider
 ```jsx
 <AxiosProvider instance={axiosInstance}>
   <Get url="test">
-    {(error, response, isLoading) => {
+    {(error, response, isLoading, onReload) => {
       ...
     }}
   </Get>
@@ -134,7 +134,7 @@ Pass down through a provider
 Or pass down through props
 ```jsx
 <Get url="test" instance={axiosInstance}>
-  {(error, response, isLoading) => {
+  {(error, response, isLoading, onReload) => {
     ...
   }}
 </Get>
