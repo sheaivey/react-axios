@@ -86,7 +86,7 @@ class Request extends React.Component {
       if (!this._mounted) {
         return
       }
-      if (!_axios.isCancel(err)) {
+      if (!axios.isCancel(err)) {
         this.setState({ isLoading: false, response: err.response, error: err })
         if (typeof this.props.onError === 'function') {
           this.props.onError(err)
