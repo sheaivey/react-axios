@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -29,15 +28,3 @@ AxiosProvider.propTypes = {
 }
 
 export default AxiosProvider
-
-export const withAxios = (WrappedComponent) => {
-  const AxiosExtracter = (props, context) => {
-    return <WrappedComponent axios={context.axios || axios} {...props}/>
-  }
-
-  AxiosExtracter.contextTypes = {
-    axios: PropTypes.func,
-  }
-
-  return AxiosExtracter
-}

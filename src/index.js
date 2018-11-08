@@ -1,4 +1,5 @@
-import AxiosProvider, { withAxios } from './components/AxiosProvider'
+import AxiosProvider from './components/AxiosProvider'
+import withAxios from './components/withAxios'
 import Request from './components/Request'
 import RequestWrapper from './components/RequestWrapper'
 
@@ -11,5 +12,5 @@ module.exports = {
   Post: RequestWrapper('post'),
   Put: RequestWrapper('put'),
   Patch: RequestWrapper('patch'),
-  withAxios: withAxios,
+  withAxios,
 }

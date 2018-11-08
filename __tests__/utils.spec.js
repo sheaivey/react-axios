@@ -184,7 +184,7 @@ describe('components', () => {
   })
 
   describe('#withAxios', () => {
-    const Component = withAxios(props => {
+    const Component = withAxios()(props => {
       props.onRendered(props.axios)
       return <div/>
     })
@@ -209,5 +209,9 @@ describe('components', () => {
       )
       expect(seenAxios).toBe(axiosInstance)
     })
+    describe('#track options', require('./withAxios.params'))
+    describe('#allows request as object', require('./withAxios.requestAsObject'))
+    describe('#pass errors', require('./withAxios.response.error'))
+    describe('#pass success', require('./withAxios.response.success'))
   })
 })

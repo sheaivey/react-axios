@@ -143,7 +143,7 @@ Or pass down through props
 Retrieve from custom provider (when you need to directly use axios).
 The default instance will be passed if not inside an `<AxiosProvider/>`.
 ```jsx
-const MyComponent = withAxios(class MyComponentImpl extends React.Component {
+const MyComponent = withAxios()(class MyComponentImpl extends React.Component {
   componentWillMount() {
     this.props.axios('test').then(result => {
       this.setState({ data: result.data })
@@ -159,3 +159,5 @@ const MyComponent = withAxios(class MyComponentImpl extends React.Component {
   <MyComponent/>
 </AxiosProvider>
 ```
+
+Look at additional available abilities for `withAxios` [hoc](https://reactjs.org/docs/higher-order-components.html) in [additional README.md](src/components/withAxios/README.md)
