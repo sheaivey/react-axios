@@ -1,6 +1,7 @@
 {
   "presets" : [
     "./tools/babelPreset",
+    "stage-2",
     "react"
   ],
   "env": {
