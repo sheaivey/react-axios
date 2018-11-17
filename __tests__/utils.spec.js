@@ -49,12 +49,12 @@ describe('utils', () => {
     test('debounce test', () => {
       return debounceTest.then((res)=> {
         expect(res).toBe(1)
-      })
+      }, (err) => {})
     })
     test('debounce test immediate', () => {
       return debounceTestImmediate.then((res)=> {
         expect(res).toBe(2)
-      })
+      }, (err) => {})
     })
   })
 })
@@ -183,12 +183,12 @@ describe('components', () => {
     })
   })
 
-  describe('#withAxios', () => {
+  describe('#withAxios(component) basic HoC', () => {
     const Component = withAxios(props => {
       props.onRendered(props.axios)
       return <div/>
     })
-    test('provides default instance', () => {
+    test('provides default axios instance', () => {
       let seenAxios
       renderer.create(
         <Component onRendered={passedAxios => {
@@ -208,6 +208,64 @@ describe('components', () => {
         </AxiosProvider>
       )
       expect(seenAxios).toBe(axiosInstance)
+    })
+  })
+
+  describe('#withAxios(options)(component) request HoC', () => {
+    const Component = withAxios({ method: 'get' })(props => {
+      props.onRendered(props)
+      return <div/>
+    })
+    test('provides default axios instance', () => {
+      let seenAxios
+      renderer.create(
+        <Component onRendered={props => {
+          seenAxios = props.axios
+        }}/>
+      )
+      expect(typeof seenAxios).toBe('function')
+    })
+    test('respects AxiosProvider', () => {
+      const axiosInstance = axios.create()
+      let seenAxios
+      renderer.create(
+        <AxiosProvider instance={axiosInstance}>
+          <Component onRendered={props => {
+            seenAxios = props.axios
+          }}/>
+        </AxiosProvider>
+      )
+      expect(seenAxios).toBe(axiosInstance)
+    })
+    test('passes custom props', () => {
+      let customProp
+      renderer.create(
+        <Component customProp="Hello World!" onRendered={props => {
+          customProp = props.customProp
+        }}/>
+      )
+      expect(customProp).toBe('Hello World!')
+    })
+    test('overload options', () => {
+      let props
+      renderer.create(
+        <Component options={{ method: 'post' }} onRendered={p => {
+          props = p
+        }}/>
+      )
+      expect(props.options.method).toBe('post')
+    })
+    test('passes down Request child function props', () => {
+      let props
+      renderer.create(
+        <Component onRendered={p => {
+          props = p
+        }}/>
+      )
+      expect(props.error).toBe(null)
+      expect(props.response).toBe(null)
+      expect(props.isLoading).toBe(false)
+      expect(typeof props.onReload).toBe('function')
     })
   })
 })
