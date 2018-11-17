@@ -1,4 +1,5 @@
-import AxiosProvider, { withAxios } from './components/AxiosProvider'
+import AxiosProvider from './components/AxiosProvider'
+import withAxios from './components/withAxios'
 import Request from './components/Request'
 import RequestWrapper from './components/RequestWrapper'
 
