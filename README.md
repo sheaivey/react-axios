@@ -11,13 +11,13 @@ This is intended to allow in render async requests.
 
 - Same great features found in [Axios](https://github.com/mzabriskie/axios)
 - Component driven
-- Child function callback ***(error, response, isLoading, onReload, axios) => { }***
+- Child function callback ***(error, response, isLoading, makeRequest, axios) => { }***
 - Auto cancel previous requests
 - Debounce to prevent rapid calls.
 - Request only invoked on prop change and *isReady* state.
 - Callback props for ***onSuccess***, ***onError***, and ***onLoading***
 - Supports custom axios instances through ***props*** or a ***&lt;AxiosProvider ... &gt;***
-- Create your own request components wrapped using the withAxios({options})(ComponentToBeWrapped) HoC
+- Create your own request components wrapped using the ***withAxios({options})(ComponentToBeWrapped)*** HoC
 
 ## Installing
 
@@ -81,15 +81,15 @@ render() {
   return (
     <div>
       <Get url="/api/user" params={{id: "12345"}}>
-        {(error, response, isLoading, onReload, axios) => {
+        {(error, response, isLoading, makeRequest, axios) => {
           if(error) {
-            return (<div>Something bad happened: {error.message} <button onClick={() => onReload({ params: { reload: true } })}>Retry</button></div>)
+            return (<div>Something bad happened: {error.message} <button onClick={() => makeRequest({ params: { reload: true } })}>Retry</button></div>)
           }
           else if(isLoading) {
             return (<div>Loading...</div>)
           }
           else if(response !== null) {
-            return (<div>{response.data.message} <button onClick={() => onReload({ params: { refresh: true } })}>Refresh</button></div>)
+            return (<div>{response.data.message} <button onClick={() => makeRequest({ params: { refresh: true } })}>Refresh</button></div>)
           }
           return (<div>Default message before request is made.</div>)
         }}
@@ -106,7 +106,7 @@ render() {
 
 `isLoading` Boolean flag indicating if Axios is currently making a XHR request.
 
-`onReload(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only.
+`makeRequest(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only.
 
 `axios` current instance of axios being used.
 
@@ -127,7 +127,7 @@ Pass down through a provider
 ```jsx
 <AxiosProvider instance={axiosInstance}>
   <Get url="test">
-    {(error, response, isLoading, onReload, axios) => {
+    {(error, response, isLoading, makeRequest, axios) => {
       ...
     }}
   </Get>
@@ -137,7 +137,7 @@ Pass down through a provider
 Or pass down through props
 ```jsx
 <Get url="test" instance={axiosInstance}>
-  {(error, response, isLoading, onReload, axios) => {
+  {(error, response, isLoading, makeRequest, axios) => {
     ...
   }}
 </Get>
@@ -176,7 +176,7 @@ const MyComponent = withAxios({
     params: {id: "12345"}
   })(class MyComponentRaw extends React.Component {
   render() {
-    const {error, response, isLoading, onReload, axios} = this.props
+    const {error, response, isLoading, makeRequest, axios} = this.props
     if(error) {
       return (<div>Something bad happened: {error.message}</div>)
     } else if(isLoading) {

@@ -36,14 +36,14 @@ class App extends React.Component {
           onLoading={()=>this.setState({ isLoading: true })}
           onError={()=>this.setState({ isReady: false, isLoading: false })}
         >
-          {(error, response, isLoading, onReload) => {
+          {(error, response, isLoading, makeRequest) => {
             if(error) {
               console.log(response)
-              return (<div>Something bad happened: {error.message} <button className="info" onClick={() => onReload()}>Retry</button></div>)
+              return (<div>Something bad happened: {error.message} <button className="info" onClick={() => makeRequest()}>Retry</button></div>)
             } else if(isLoading) {
               return (<div className="loader"></div>)
             } else if(response !== null) {
-              return (<div>{response.data.message} <button className="info" onClick={() => onReload({ params:{ refresh: true } })}>Refresh</button></div>)
+              return (<div>{response.data.message} <button className="info" onClick={() => makeRequest({ params:{ refresh: true } })}>Refresh</button></div>)
             }
             return <div>Click a button to test its action.</div>
           }}

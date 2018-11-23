@@ -24,21 +24,19 @@ class Request extends React.Component {
     let oldPropStr = JSON.stringify(this.props)
     let newPropStr = JSON.stringify(newProps)
     if (oldPropStr != newPropStr && newProps.isReady) {
-      this.debounceMakeRequest(this.getConfig(newProps))
+      this.debounceMakeRequest(newProps, this.getConfig(newProps))
     }
   }
 
   componentDidMount() {
     this._mounted = true
     if (this.props.isReady) {
-      this.debounceMakeRequest(this.getConfig(this.props))
+      this.debounceMakeRequest(this.props, this.getConfig(this.props))
     }
   }
 
-  onReload(props) {
-    if (!this.state.isLoading) {
-      this.debounceMakeRequest(this.getConfig(props ? Object.assign({}, this.props, props) : this.props))
-    }
+  onMakeReload(props) {
+    this.debounceMakeRequest(props || this.props, this.getConfig(props ? Object.assign({}, this.props, props) : this.props))
   }
 
   componentWillUnmount() {
@@ -56,9 +54,9 @@ class Request extends React.Component {
     return Object.assign({ url: props.url, method: props.method, data: props.data, params: props.params }, props.config)
   }
 
-  makeRequest(config) {
-    const _axios = this.props.instance || this.context.axios || axios
-    if (!this._mounted || !this.props.isReady || this.props.url === undefined) {
+  makeRequest(props, config) {
+    const _axios = props.instance || this.context.axios || axios
+    if (!this._mounted || config.url === undefined) {
       return
     }
     // setup cancel tokens
@@ -69,8 +67,8 @@ class Request extends React.Component {
 
     // set the isLoading flag
     this.setState({ isLoading: true, error: null  })
-    if (typeof this.props.onLoading === 'function') {
-      this.props.onLoading()
+    if (typeof props.onLoading === 'function') {
+      props.onLoading()
     }
 
     // time to make the axios request
@@ -79,8 +77,8 @@ class Request extends React.Component {
         return
       }
       this.setState({ isLoading: false, response: res })
-      if (typeof this.props.onSuccess === 'function') {
-        this.props.onSuccess(res)
+      if (typeof props.onSuccess === 'function') {
+        props.onSuccess(res)
       }
     }, (err) => {
       if (!this._mounted) {
@@ -88,8 +86,8 @@ class Request extends React.Component {
       }
       if (!axios.isCancel(err)) {
         this.setState({ isLoading: false, response: err.response, error: err })
-        if (typeof this.props.onError === 'function') {
-          this.props.onError(err)
+        if (typeof props.onError === 'function') {
+          props.onError(err)
         }
       }
     })
@@ -102,7 +100,7 @@ class Request extends React.Component {
         this.state.error,
         this.state.response,
         this.state.isLoading,
-        (props) => this.onReload(props),
+        (props) => this.onMakeReload(props),
         _axios
       )
     }

@@ -6,8 +6,12 @@ let WebpackConfig = require('./webpack.config')
 
 let app = express()
 
-app.all('/api/*', (req, res) => { // Fake API response
+app.all('/api/*', (req, res) => { // Fake API response with timeout
   setTimeout(() => { res.status(200).json({ message: 'Success! ' + req.method +  ' ' + req.url }) }, 1000)
+})
+
+app.all('/error*', (req, res) => { // Fake ERROR response with timeout
+  setTimeout(() => { res.status(404).json({ message: 'Error 404! ' + req.method +  ' ' + req.url }) }, 500)
 })
 
 app.use(webpackDevMiddleware(webpack(WebpackConfig), {

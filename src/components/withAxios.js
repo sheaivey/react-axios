@@ -30,13 +30,13 @@ export const withAxios = (mixed = {}) => {
         const newOptions = { ...options, ...this.props.options }
         return (
           <Request {...newOptions}>
-            {(error, response, isLoading, onReload, axios) => (
+            {(error, response, isLoading, makeRequest, axios) => (
               <WrappedComponent
                 {...this.props}
                 error={error}
                 response={response}
                 isLoading={isLoading}
-                onReload={onReload}
+                makeRequest={makeRequest}
                 axios={axios}
                 options={newOptions}
               />

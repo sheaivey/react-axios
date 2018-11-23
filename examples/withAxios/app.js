@@ -16,6 +16,9 @@ class App extends React.Component {
           <h2>Overloading withAxios HoC config options</h2>
           <DemoComponentHoC options={{ method: 'post', url: '/api/overloaded' }} />
 
+          <h2>Overloading url=undefined withAxios HoC config options</h2>
+          <DemoComponentHoC options={{ method: 'post', url: undefined }} />
+
           <h2>Children withAxios HoC</h2>
           <DemoComponentHoC><div className="success">children</div></DemoComponentHoC>
         </code>
@@ -26,7 +29,7 @@ class App extends React.Component {
 /* eslint react/prop-types: 0 */
 class DemoComponent extends React.Component {
   render() {
-    const { error, response, isLoading, children, customProp, onRendered } = this.props
+    const { error, response, isLoading, children, customProp, axios, makeRequest } = this.props
     if(error) {
       return (<div>Something bad happened: {error.message}</div>)
     } else if(isLoading) {
