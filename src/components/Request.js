@@ -58,7 +58,7 @@ class Request extends React.Component {
 
   makeRequest(config) {
     const _axios = this.props.instance || this.context.axios || axios
-    if (!this._mounted) {
+    if (!this._mounted || !this.props.isReady || this.props.url === undefined) {
       return
     }
     // setup cancel tokens
@@ -97,7 +97,14 @@ class Request extends React.Component {
 
   render() {
     if (typeof this.props.children === 'function') {
-      return this.props.children(this.state.error, this.state.response, this.state.isLoading, (props) => this.onReload(props))
+      const _axios = this.props.instance || this.context.axios || axios
+      return this.props.children(
+        this.state.error,
+        this.state.response,
+        this.state.isLoading,
+        (props) => this.onReload(props),
+        _axios
+      )
     }
     return null
   }
@@ -108,7 +115,7 @@ Request.contextTypes = {
 }
 
 Request.defaultProps = {
-  url: '',
+  url: undefined,
   method: 'get',
   data: {},
   config: {},
@@ -119,8 +126,8 @@ Request.defaultProps = {
 
 Request.propTypes = {
   instance: PropTypes.func,
-  url: PropTypes.string.isRequired,
-  method: PropTypes.string.isRequired,
+  url: PropTypes.string,
+  method: PropTypes.oneOf([ 'get', 'delete', 'head','post','put','patch', 'options' ]).isRequired,
   data: PropTypes.object,
   params: PropTypes.object,
   config: PropTypes.object,

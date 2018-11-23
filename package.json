@@ -43,8 +43,8 @@
   "dependencies": {},
   "peerDependencies": {
     "axios": "^0.15.0",
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
-    "prop-types": "^15.5.0"
+    "prop-types": "^15.5.0",
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
   },
   "devDependencies": {
     "axios": "^0.17.1",
@@ -55,13 +55,14 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^3.1.3",
     "eslint": "^3.2.0",
     "eslint-config-rackt": "^1.1.1",
     "eslint-plugin-react": "^6.7.1",
     "express": "^4.14.0",
     "express-urlrewrite": "^1.2.0",
-    "jest": "^17.0.3",
+    "jest": "^23.6.0",
     "raf": "^3.4.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",

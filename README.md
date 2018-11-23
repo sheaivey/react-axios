@@ -11,12 +11,13 @@ This is intended to allow in render async requests.
 
 - Same great features found in [Axios](https://github.com/mzabriskie/axios)
 - Component driven
-- Child function callback ***(error, response, isLoading, onReload) => { }***
+- Child function callback ***(error, response, isLoading, onReload, axios) => { }***
 - Auto cancel previous requests
 - Debounce to prevent rapid calls.
 - Request only invoked on prop change and *isReady* state.
 - Callback props for ***onSuccess***, ***onError***, and ***onLoading***
 - Supports custom axios instances through ***props*** or a ***&lt;AxiosProvider ... &gt;***
+- Create your own request components wrapped using the withAxios({options})(ComponentToBeWrapped) HoC
 
 ## Installing
 
@@ -80,7 +81,7 @@ render() {
   return (
     <div>
       <Get url="/api/user" params={{id: "12345"}}>
-        {(error, response, isLoading, onReload) => {
+        {(error, response, isLoading, onReload, axios) => {
           if(error) {
             return (<div>Something bad happened: {error.message} <button onClick={() => onReload({ params: { reload: true } })}>Retry</button></div>)
           }
@@ -107,6 +108,8 @@ render() {
 
 `onReload(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only.
 
+`axios` current instance of axios being used.
+
 
 ## Custom Axios Instance
 
@@ -124,7 +127,7 @@ Pass down through a provider
 ```jsx
 <AxiosProvider instance={axiosInstance}>
   <Get url="test">
-    {(error, response, isLoading, onReload) => {
+    {(error, response, isLoading, onReload, axios) => {
       ...
     }}
   </Get>
@@ -134,7 +137,7 @@ Pass down through a provider
 Or pass down through props
 ```jsx
 <Get url="test" instance={axiosInstance}>
-  {(error, response, isLoading, onReload) => {
+  {(error, response, isLoading, onReload, axios) => {
     ...
   }}
 </Get>
@@ -143,7 +146,15 @@ Or pass down through props
 Retrieve from custom provider (when you need to directly use axios).
 The default instance will be passed if not inside an `<AxiosProvider/>`.
 ```jsx
-const MyComponent = withAxios(class MyComponentImpl extends React.Component {
+<AxiosProvider instance={axiosInstance}>
+  <MyComponent/>
+</AxiosProvider>
+```
+
+## withAxios(Component) HoC
+If you need basic access to the axios instance but don't need anything else you can wrap a component using withAxios() higher order component.
+```jsx
+const MyComponent = withAxios(class MyComponentRaw extends React.Component {
   componentWillMount() {
     this.props.axios('test').then(result => {
       this.setState({ data: result.data })
@@ -154,8 +165,26 @@ const MyComponent = withAxios(class MyComponentImpl extends React.Component {
     return <div>{JSON.stringify(data)}</div>
   }
 })
+```
 
-<AxiosProvider instance={axiosInstance}>
-  <MyComponent/>
-</AxiosProvider>
+## withAxios(options)(Component) HoC
+If you want to create your own component with the full react-axios request `options`. You can override the initial options supplied to withAxios at any time by passing `options` prop to your wrapped component. See below on how this works.
+
+```jsx
+const MyComponent = withAxios({
+    url: '/api/user'
+    params: {id: "12345"}
+  })(class MyComponentRaw extends React.Component {
+  render() {
+    const {error, response, isLoading, onReload, axios} = this.props
+    if(error) {
+      return (<div>Something bad happened: {error.message}</div>)
+    } else if(isLoading) {
+      return (<div className="loader"></div>)
+    } else if(response !== null) {
+      return (<div>{response.data.message}</div>)
+    }
+    return null
+  }
+})
 ```
