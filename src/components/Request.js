@@ -115,7 +115,6 @@ Request.contextTypes = {
 Request.defaultProps = {
   url: undefined,
   method: 'get',
-  data: {},
   config: {},
   debounce: 200,
   debounceImmediate: true,
