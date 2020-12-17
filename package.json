@@ -18,7 +18,8 @@
     "build-min": "cross-env NODE_ENV=production webpack -p src/index.js umd/ReactAxios.min.js",
     "lint": "eslint src",
     "start": "node examples/index.js",
-    "test": "npm run lint && jest"
+    "test": "npm run lint && jest",
+    "release": "./scripts/release.sh"
   },
   "author": "Shea Ivey",
   "license": "MIT",
