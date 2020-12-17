@@ -15,7 +15,7 @@ class Request extends React.Component {
     this.setupDebounce(props)
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (this.props.debounce !== newProps.debounce) {
       this.setupDebounce(newProps)
     }
