@@ -1,23 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
-class AxiosProvider extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+export const AxiosContext = React.createContext(axios)
 
-  getChildContext() {
-    return { axios: this.props.instance }
-  }
-
-  render() {
-    return this.props.children
-  }
-}
-
-AxiosProvider.childContextTypes = {
-  axios: PropTypes.func,
-}
+const AxiosProvider = ({ instance, children }) => (
+  <AxiosContext.Provider value={instance}>
+    {children}
+  </AxiosContext.Provider>
+)
 
 AxiosProvider.defaultProps = {
 }

@@ -43,12 +43,12 @@
   ],
   "dependencies": {},
   "peerDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "prop-types": "^15.7.0",
     "react": "^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",

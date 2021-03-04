@@ -81,6 +81,8 @@ class App extends React.Component {
 
 
 ReactDOM.render(
-  <App />,
+  <React.StrictMode>
+      <App />
+  </React.StrictMode>,
   document.getElementById('app')
 )

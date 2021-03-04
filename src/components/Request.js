@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { AxiosContext } from './AxiosProvider'
 import { debounce } from '../utils'
 
 class Request extends React.Component {
@@ -15,17 +16,19 @@ class Request extends React.Component {
     this.setupDebounce(props)
   }
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    if (this.props.debounce !== newProps.debounce) {
+  componentDidUpdate(prevProps) {
+    const newProps = this.props
+    if (prevProps.debounce !== newProps.debounce) {
       this.setupDebounce(newProps)
     }
 
     // quick and dirty prop compare
-    let oldPropStr = JSON.stringify(this.props)
+    let oldPropStr = JSON.stringify(prevProps)
     let newPropStr = JSON.stringify(newProps)
     if (oldPropStr != newPropStr && newProps.isReady) {
       this.debounceMakeRequest(newProps, this.getConfig(newProps))
     }
+    return null
   }
 
   componentDidMount() {
@@ -55,7 +58,7 @@ class Request extends React.Component {
   }
 
   makeRequest(props, config) {
-    const _axios = props.instance || this.context.axios || axios
+    const _axios = props.instance || this.context || axios
     if (!this._mounted || config.url === undefined) {
       return
     }
@@ -95,7 +98,7 @@ class Request extends React.Component {
 
   render() {
     if (typeof this.props.children === 'function') {
-      const _axios = this.props.instance || this.context.axios || axios
+      const _axios = this.props.instance || this.context || axios
       return this.props.children(
         this.state.error,
         this.state.response,
@@ -108,9 +111,7 @@ class Request extends React.Component {
   }
 }
 
-Request.contextTypes = {
-  axios: PropTypes.func,
-}
+Request.contextType = AxiosContext
 
 Request.defaultProps = {
   url: undefined,
