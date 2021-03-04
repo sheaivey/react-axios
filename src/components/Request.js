@@ -116,7 +116,7 @@ Request.contextType = AxiosContext
 Request.defaultProps = {
   url: undefined,
   method: 'get',
-  data: {},
+  data: undefined,
   config: {},
   debounce: 200,
   debounceImmediate: true,
