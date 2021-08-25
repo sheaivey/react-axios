@@ -106,7 +106,7 @@ render() {
 
 `isLoading` Boolean flag indicating if Axios is currently making a XHR request.
 
-`makeRequest(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only.
+`makeRequest(props)` Function to invoke another XHR request. This function accepts new temporary props that will be overloaded with the existing props for this request only. This does not include events, events like `onSuccess` set at the component level will not fire. However, they can and will fire if included in the arguments to the `makeRequest` function.
 
 `axios` current instance of axios being used.
 
