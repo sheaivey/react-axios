@@ -1,6 +1,6 @@
 import { Request, Get, Post, Put, Delete, Head, Patch } from 'react-axios'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 class App extends React.Component {
   constructor(props) {
@@ -57,10 +57,10 @@ class App extends React.Component {
   }
 }
 
-
-ReactDOM.render(
+const container = document.getElementById('app')
+const root = createRoot(container)
+root.render(
   <React.StrictMode>
-      <App />
-  </React.StrictMode>,
-  document.getElementById('app')
+    <App />
+  </React.StrictMode>
 )

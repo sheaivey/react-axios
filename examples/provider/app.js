@@ -1,7 +1,7 @@
 import { AxiosProvider, Get } from 'react-axios'
 import axios from 'axios'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 const axiosProvider = axios.create({
   baseURL: '/api/provider/',
@@ -57,9 +57,10 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
+const container = document.getElementById('app')
+const root = createRoot(container)
+root.render(
   <React.StrictMode>
-      <App />
-  </React.StrictMode>,
-  document.getElementById('app')
+    <App />
+  </React.StrictMode>
 )

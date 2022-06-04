@@ -41,14 +41,13 @@
     "promise",
     "node"
   ],
-  "dependencies": {},
   "peerDependencies": {
-    "axios": "^0.21.1",
-    "prop-types": "^15.7.0",
-    "react": "^16.0.0 || ^17.0.0"
+    "axios": "^0.27.2",
+    "prop-types": "^15.8.1",
+    "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.27.2",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",
@@ -66,9 +65,9 @@
     "jest": "^23.6.0",
     "prop-types": "^15.7.2",
     "raf": "^3.4.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-test-renderer": "^17.0.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-test-renderer": "^18.1.0",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4"
   }
